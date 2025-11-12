@@ -44,7 +44,7 @@ export function startGame(req, res) {
     req.session.game = {
         currentIndex: 0, //Prémio atual (comeca no zero)
         prizes: PRIZES, // Array de prémios
-        ramainingQuestions: [...QUESTIONS], // Perguntas restantes
+        remainingQuestions: [...QUESTIONS], // Perguntas restantes
         currentQuestion: null,
         used: {5050: false, hint: false, swap: false}, // ajudas
         removedOptions: [], // Indice de opcoes removidas pelo 50/50
