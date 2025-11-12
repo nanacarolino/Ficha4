@@ -19,7 +19,7 @@
 
 import { Router } from "express";
 
-import { showHome } from "../controllers/gameController.js";
+import { showHome, startGame } from "../controllers/gameController.js";
 
 const router = Router();
 
@@ -29,5 +29,13 @@ const router = Router();
  * Ecrã inicial (landing). Mostra botão "Começar".
  */
 router.get("/", showHome);
+
+/**
+ * POST /start
+ * Cria/limpa o esdado na sessão e escolhe a primeira pergunta.
+ * Redireciona para /game.
+ */
+
+router.post("/start", startGame);
 
 export default router;

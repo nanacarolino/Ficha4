@@ -7,6 +7,7 @@
 
 import express from "express"; // Importa o módulo express
 import path from "path"; // Importa o path para chegar às vistas
+import session from "express-session";
 import { fileURLToPath } from "url"; // // Importa os
 // urls dos ficheiros das vistas
 
@@ -35,6 +36,26 @@ function createAPP() {
     // O __dirname tem dois _
     // Todas as variáveis dde sistema comeca port 2 _
     app.use(express.static(path.join(__dirname, "..", "public")));
+
+    /* -----------------------------------------------------------------------
+     Sessões (estado do jogo sem base de dados)
+    - Usamos `express-session` para manter o progresso do jogador entre pedidos.
+    - O cookie de sessão identifica o cliente; os dados vivem no servidor.
+    - Em produção devemos usar um Session Store (ex.: Redis, Mongo).
+    - Para a ficha (desenvolvimento/local), a "MemoryStore" é suficiente.
+    -------------------------------------------------------------------- */
+    app.use(
+        session({
+            secret: "este-segredo-e-muito-secreto",
+            name: "milionario.sid",
+            resave: false,
+            saveUninitialized: true,
+            cookie: {
+                maxAge: 1000*60*30,
+                httpOnly: true,
+            },
+        })
+    );
 
     // Usar rotas
     app.use("/", gameRoutes);

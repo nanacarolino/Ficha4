@@ -13,6 +13,7 @@
 
 import QUESTIONS from "../data/questions.js";
 import PRIZES from "../data/prizes.js";
+import { pickNextQuestion, apply5050 } from "../utils/helpers.js";
 
 const MAX_INDEX = PRIZES.length - 1;
 
@@ -27,4 +28,29 @@ export function showHome(req, res) {
     res.render("pages/home", {
         title: "Quem quer ser milionário.",
     });
+}
+
+
+/**
+ * POST /start
+ * Inicializa o estado do jogo na sessão e escolhe a primeira pergunta
+ * Redireciona a
+ * para /game.
+ * 
+ * @function startGame
+ */
+
+export function startGame(req, res) {
+    req.session.game = {
+        currentIndex: 0, //Prémio atual (comeca no zero)
+        prizes: PRIZES, // Array de prémios
+        ramainingQuestions: [...QUESTIONS], // Perguntas restantes
+        currentQuestion: null,
+        used: {5050: false, hint: false, swap: false}, // ajudas
+        removedOptions: [], // Indice de opcoes removidas pelo 50/50
+        safePrizeIndex: 4, // Patamar de segurança
+        hintQuestionId: null, // ID da pergunta para a qual foi dada
+    };
+    req.session.game.currentQuestion = pickNextQuestion(req.session.game);
+    res.redirect("/game");
 }
