@@ -7,7 +7,7 @@
 
 import express from "express"; // Importa o módulo express
 import path from "path"; // Importa o path para chegar às vistas
-import { fileURLToPath, fileURLToPathBuffer } from "url"; // // Importa os
+import { fileURLToPath } from "url"; // // Importa os
 // urls dos ficheiros das vistas
 
 // Importar rotas
@@ -30,6 +30,11 @@ function createAPP() {
     // Ativar o motor das vistas
     app.set("view engine", "ejs");
     app.set("views", path.join(__dirname, "views"));
+
+    // Aceder a conteúdos estáticos na pasta "public"
+    // O __dirname tem dois _
+    // Todas as variáveis dde sistema comeca port 2 _
+    app.use(express.static(path.join(__dirname, "..", "public")));
 
     // Usar rotas
     app.use("/", gameRoutes);
