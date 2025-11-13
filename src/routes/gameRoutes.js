@@ -19,7 +19,7 @@
 
 import { Router } from "express";
 
-import { showHome, startGame } from "../controllers/gameController.js";
+import { showHome, startGame, showQuestion, submitAnswer } from "../controllers/gameController.js";
 
 const router = Router();
 
@@ -37,5 +37,20 @@ router.get("/", showHome);
  */
 
 router.post("/start", startGame);
+
+/**
+ * GET /game
+ * Mostra a pergunta atual, as respostas  e a torre de prémios.
+ */
+
+router.get("/game", showQuestion);
+
+/**
+ * POST /answer
+ * Recebe a opção escolhida via `req.body.option` e verifica se está correta.
+ * Em caso de acerto, avança nível; em caso de erro, termina o jogo.
+ */
+
+router.get("/answer", submitAnswer);
 
 export default router;
