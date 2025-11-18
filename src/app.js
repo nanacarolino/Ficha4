@@ -34,7 +34,7 @@ function createAPP() {
 
     // Aceder a conteúdos estáticos na pasta "public"
     // O __dirname tem dois _
-    // Todas as variáveis dde sistema comeca port 2 _
+    // Todas as variáveis de sistema começam por 2 _
     app.use(express.static(path.join(__dirname, "..", "public")));
 
     /* -----------------------------------------------------------------------
